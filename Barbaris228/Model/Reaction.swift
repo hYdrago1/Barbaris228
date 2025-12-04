@@ -17,3 +17,4 @@ enum ReactionType: CaseIterable {
 struct Reaction {
     let text: String?
 }
+

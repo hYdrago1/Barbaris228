@@ -10,9 +10,11 @@ import UIKit
 
 class ReactionGeneration {
     
-    private let textMessages = [
+    static let shared = ReactionGeneration()
+    
+    let textMessages = [
         "оу щит",
-        "злоебучий поросёнок",
+        "поросёнок",
         "21",
         "баба яга",
         "тапай дальше хомячка",
@@ -22,16 +24,19 @@ class ReactionGeneration {
         "раз два - двадцать два",
         "вы петагорасы",
         "живи счастливо",
-        "любишь с горочки кататься - иди нахуй",
+        "любишь с горочки кататься - люби маму",
         "продолжай",
-        "через 2 тапа ахуеешь",
+        "через 2 тапа удивишься",
         "всё ещё впереди",
         "всё ещё тапаешь?",
         "не останавливайся!",
         "иди отдохни",
+        "как прошел день чемпион?",
+        "остановись чувак",
+        
     ]
 
-    private let emojis = [
+    let emojis = [
         "💩",
         "🙇🏾‍♀️",
         "🌍",
@@ -56,36 +61,22 @@ class ReactionGeneration {
         "✝️"
     ]
     
-    private var player: AVAudioPlayer?
+    let soundNames = [
+        "sound1",
+        "sound2",
+        "sound3",
+        "sound4",
+        "sound5",
+        "sound6",
+        "sound7",
+        "sound8",
+        "sound9",
+        "sound10",
+        "sound11",
+        "sound12",
+        "sound13"
+    ]
     
-    func generate() -> Reaction {
-        let type = ReactionType.allCases.randomElement()!
-        
-        switch type {
-        case .textMessage:
-            return Reaction.init(text: textMessages.randomElement())
-            
-        case .emoji:
-            return Reaction.init(text: emojis.randomElement())
-            
-        case .vibration:
-            let generator = UIImpactFeedbackGenerator(style: .heavy)
-            generator.impactOccurred()
-            return Reaction(text: "Вибро 💦")
-            
-        case .sound:
-            playRandomSound()
-            return Reaction(text: "Звук 🎧")
-            
-       
-        }
-        
-    }
-    
-    private func playRandomSound() {
-        guard let url = Bundle.main.url(forResource: "click", withExtension: "mp3") else { return }
-        player = try? AVAudioPlayer(contentsOf: url)
-        player?.play()
-    }
+    var counter = 0
     
 }

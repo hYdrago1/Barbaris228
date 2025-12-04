@@ -15,7 +15,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		93B293CD2EDB7E2F00E789FB /* Exceptions for "Barbaris228" folder in "Barbaris228" target */ = {
+		93C196E92EE1F3B900DC4049 /* Exceptions for "Barbaris228" folder in "Barbaris228" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -28,7 +28,10 @@
 		93B293BD2EDB7E2D00E789FB /* Barbaris228 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				93B293CD2EDB7E2F00E789FB /* Exceptions for "Barbaris228" folder in "Barbaris228" target */,
+				93C196E92EE1F3B900DC4049 /* Exceptions for "Barbaris228" folder in "Barbaris228" target */,
+			);
+			explicitFolders = (
+				Sounds,
 			);
 			path = Barbaris228;
 			sourceTree = "<group>";
