@@ -11,8 +11,10 @@ import AVFoundation
 
 final class HomeVC: UIViewController {
     
-    @IBOutlet var countrerLabel: UILabel!
+    @IBOutlet var counterLabel: UILabel!
     @IBOutlet var messageLabel: SpringLabel!
+    @IBOutlet var messageLabelView: UIView!
+    @IBOutlet var counterLabelView: UIView!
     
     private let generator = ReactionGeneration.shared
     private let audioManager = AudioManager.shared
@@ -20,8 +22,11 @@ final class HomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        messageLabel.text = ""
-        countrerLabel.text = ""
+        setBackgroundImage("back")
+
+        messageLabelView.layer.cornerRadius = 20
+        counterLabelView.layer.cornerRadius = 15
+        counterLabelView.alpha = 0.7
         
     }
     
@@ -29,34 +34,47 @@ final class HomeVC: UIViewController {
     @IBAction func activeButton(_ sender: SpringButton) {
         audioManager.stopSound()
         let reaction = generate()
+        generator.markAsSeen(reaction)
         messageLabel.text = reaction.text
         generator.counter += 1
-        countrerLabel.text = "ты тапнул уже: \(generator.counter) раз"
+        counterLabel.text = "ты тапнул уже: \(generator.counter) раз"
     }
     
     func generate() -> Reaction {
         let type = ReactionType.allCases.randomElement()!
         
         switch type {
+
         case .textMessage:
-            return Reaction.init(text: generator.textMessages.randomElement())
-            
+            let message = generator.textMessages.randomElement()!
+            return Reaction(type: .textMessage, text: message, value: message)
+
         case .emoji:
-            return Reaction.init(text: generator.emojis.randomElement())
-            
+            let emoji = generator.emojis.randomElement()!
+            return Reaction(type: .emoji, text: emoji, value: emoji)
+
         case .vibration:
-            let generator = UIImpactFeedbackGenerator(style: .heavy)
-            generator.impactOccurred()
-            return Reaction(text: "Вибро 💦")
-            
+            let vibration = UIImpactFeedbackGenerator(style: .rigid)
+            vibration.impactOccurred()
+            return Reaction(type: .vibration, text: "Вибрация 🫨", value: "vibration")
+
         case .sound:
-            audioManager.playSound(named: generator.soundNames.randomElement() ?? "sound1")
-            return Reaction(text: "🎧")
+            let soundName = generator.soundNames.randomElement()!
+            audioManager.playSound(named: soundName)
+            return Reaction(type: .sound, text: "Звук 🔉", value: soundName)
         }
-        
     }
     
-    
 
 
+}
+extension HomeVC {
+    func setBackgroundImage(_ imageName: String) {
+        let backgroundImageView = UIImageView(frame: view.bounds)
+        backgroundImageView.image = UIImage(named: imageName)
+        backgroundImageView.contentMode = .scaleAspectFill
+        backgroundImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+        view.insertSubview(backgroundImageView, at: 0)
+    }
 }
